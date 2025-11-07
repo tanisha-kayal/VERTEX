@@ -9,19 +9,15 @@
 }
 
 /* Base */
+/* 🌍 Fusion Explorer Background Image */
 body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1950&q=80');
+  background: 
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), 
+    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  color: #fff;
-  transition: background 1s ease-in-out;
+  color: #ffffff; /* ensures text is visible */
 }
 
 
