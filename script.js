@@ -7,6 +7,7 @@ const lastSearchEl = $("#lastSearch");
 const toast = $("#toast");
 const modal = $("#modal");
 const modalContent = $("#modalContent");
+let isFetching = false;
 $("#closeModal").onclick = () => modal.close();
 
 function showToast(msg) {
@@ -37,18 +38,18 @@ async function loadDropdowns() {
     const catSel = $("#categorySelect");
     const areaSel = $("#areaSelect");
 
-    cats.forEach((c) => {
-      const opt = document.createElement("option");
-      opt.value = c.strCategory;
-      opt.textContent = c.strCategory;
-      catSel.appendChild(opt);
-    });
-    areas.forEach((a) => {
-      const opt = document.createElement("option");
-      opt.value = a.strArea;
-      opt.textContent = a.strArea;
-      areaSel.appendChild(opt);
-    });
+    // helper: only add if missing (prevents duplicates when we have static options)
+    const addOptionIfMissing = (sel, value, text) => {
+      if (!Array.from(sel.options).some((o) => o.value === value)) {
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = text || value;
+        sel.appendChild(opt);
+      }
+    };
+
+    cats.forEach((c) => addOptionIfMissing(catSel, c.strCategory, c.strCategory));
+    areas.forEach((a) => addOptionIfMissing(areaSel, a.strArea, a.strArea));
   } catch (e) {
     showToast("Failed to load options. Check your connection.");
   }
@@ -145,16 +146,27 @@ async function openDetails(id) {
 }
 
 async function runSearch() {
+  if (isFetching) return; // simple re-entrancy guard
+
   const category = $("#categorySelect").value;
   const area = $("#areaSelect").value;
   if (!category || !area) {
     showToast("Select both category and cuisine.");
     return;
   }
-  lastSearchEl.textContent = `${category} × ${area}`;
-  skeletonGrid(8);
 
+  const findBtn = $("#findRecipes");
+  const origText = findBtn ? findBtn.textContent : "Find Fusion Recipes";
   try {
+    isFetching = true;
+    if (findBtn) {
+      findBtn.disabled = true;
+      findBtn.textContent = "Searching…";
+    }
+
+    lastSearchEl.textContent = `${category} × ${area}`;
+    skeletonGrid(8);
+
     const [catMeals, areaMeals] = await Promise.all([
       fetchMealsBy("category", category),
       fetchMealsBy("area", area),
@@ -169,6 +181,12 @@ async function runSearch() {
     countEl.textContent = "0";
     empty.classList.remove("hidden");
     showToast("Fetch failed. Network issue?");
+  } finally {
+    isFetching = false;
+    if (findBtn) {
+      findBtn.disabled = false;
+      findBtn.textContent = origText;
+    }
   }
 }
 
