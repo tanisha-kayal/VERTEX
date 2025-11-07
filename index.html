@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DishDash — Recipe Fusion Explorer</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="topnav">
+      <div class="brand">
+        <div class="logo">🍜</div>
+        <h1>DishDash</h1>
+      </div>
+      <a class="gh" href="#" id="visitRepo" target="_blank" rel="noopener">★ GitHub</a>
+    </nav>
+
+    <div class="hero-copy">
+      <h2>Global flavors. <span class="gradient">Fused your way.</span></h2>
+      <p>Pick a <strong>category</strong> and a <strong>cuisine</strong>. We’ll fetch both lists and serve only the
+        <em>intersection</em>—true fusion recipes, hot & ready.</p>
+    </div>
+
+    <div class="controls card">
+      <div class="control">
+        <label for="categorySelect">Recipe Category</label>
+        <select id="categorySelect">
+          <option value="">— choose —</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="areaSelect">Cuisine / Area</label>
+        <select id="areaSelect">
+          <option value="">— choose —</option>
+        </select>
+      </div>
+
+      <div class="buttons">
+        <button id="shuffle" class="btn ghost" title="Surprise me">🎲 Shuffle</button>
+        <button id="findRecipes" class="btn primary">Find Fusion Recipes</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="stats" class="stats">
+      <div class="chip">Results: <span id="resultCount">0</span></div>
+      <div class="chip">Last search: <span id="lastSearch">—</span></div>
+    </section>
+
+    <!-- Grid results -->
+    <section id="results" class="grid" aria-live="polite"></section>
+
+    <!-- Empty state -->
+    <section id="empty" class="empty hidden">
+      <div class="empty-card card">
+        <h3>No fusion match… yet 👀</h3>
+        <p>Try another combo — e.g., <b>Chicken × Mexican</b> or <b>Seafood × Italian</b>.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Details Modal -->
+  <dialog id="modal">
+    <button class="close" id="closeModal" aria-label="Close">×</button>
+    <article id="modalContent"></article>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <footer class="footer">
+    <p>Built with ❤️ using <a href="https://www.themealdb.com/api.php" target="_blank" rel="noopener">TheMealDB</a>.
+      Theme: <strong>Fusion Explorer</strong>.</p>
+  </footer>
+
+  <noscript>This site needs JavaScript to fetch recipes.</noscript>
+  <script>
+    // (Optional) auto-fill repo button if you set the URL later
+    document.getElementById('visitRepo').href = window.location.origin;
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
