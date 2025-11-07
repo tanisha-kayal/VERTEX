@@ -9,7 +9,6 @@
 }
 
 /* Base */
-/* 🌍 Fusion Explorer Background Image */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -18,7 +17,6 @@ body{
   color:var(--charcoal);
   background: linear-gradient(135deg, #FAF9F6 0%, #FFF7EB 40%, #FFF 100%);
 }
-
 
 /* Hero */
 .hero{

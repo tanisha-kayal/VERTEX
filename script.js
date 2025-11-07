@@ -109,7 +109,7 @@ function renderMeals(list) {
 async function openDetails(id) {
   try {
     const res = await fetch(
-      https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     );
     const data = await res.json();
     const meal = data.meals?.[0];
@@ -117,9 +117,9 @@ async function openDetails(id) {
 
     const ings = [];
     for (let i = 1; i <= 20; i++) {
-      const ing = meal[strIngredient${i}];
-      const mea = meal[strMeasure${i}];
-      if (ing && ing.trim() !== "") ings.push(${ing} — ${mea || ""}.trim());
+      const ing = meal[`strIngredient${i}`];
+      const mea = meal[`strMeasure${i}`];
+      if (ing && ing.trim() !== "") ings.push(`${ing} — ${mea || ""}`.trim());
     }
 
     modalContent.innerHTML = `
@@ -132,7 +132,7 @@ async function openDetails(id) {
         </div>
         <h4>Ingredients</h4>
         <ul style="margin:8px 0 14px;padding-left:18px">
-          ${ings.map((i) => <li>${i}</li>).join("")}
+          ${ings.map((i) => `<li>${i}</li>`).join("")}
         </ul>
         <h4>Instructions</h4>
         <p style="white-space:pre-wrap;line-height:1.55">${meal.strInstructions?.trim() || "—"}</p>
@@ -151,7 +151,7 @@ async function runSearch() {
     showToast("Select both category and cuisine.");
     return;
   }
-  lastSearchEl.textContent = ${category} × ${area};
+  lastSearchEl.textContent = `${category} × ${area}`;
   skeletonGrid(8);
 
   try {
